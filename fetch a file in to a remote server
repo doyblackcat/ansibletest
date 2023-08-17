@@ -1,0 +1,18 @@
+- name:  fetch a file into here  //redhat
+  hosts: cgroup
+  tasks:
+    - name: Fetch fstab
+      fetch:
+        src: /etc/fstab
+        dest: ./FS/fstab-{{ inventory_hostname }}
+        flat: yes
+
+    - name: copy to the target 
+      copy: 
+        src:  ./FS
+        dest: /home/user1/ansibletest/config/
+        directory_mode:
+     when: inventory_hostname  == '172.16.64.9'  or inventory_hostname == 'doy-vm4'
+      tags:
+        - simple_copy_dir
+ 
